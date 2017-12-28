@@ -23,11 +23,11 @@ install_ss_panel_mod_v3(){
 	wget -N -P  /usr/local/nginx/conf/ --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/nginx.conf
 	service nginx restart
 	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
-	sed -i "s#103.74.192.11#${IPAddress}#" /home/wwwroot/default/sql/sspanel.sql
+	sed -i "s#103.74.192.11#${IPAddress}#" /www/wwwroot/cat.acgnc.cc/sql/sspanel.sql
 	mysql -uroot -proot -e"create database sspanel;" 
 	mysql -uroot -proot -e"use sspanel;" 
-	mysql -uroot -proot sspanel < /home/wwwroot/default/sql/sspanel.sql
-	cd /home/wwwroot/default
+	mysql -uroot -proot sspanel < /www/wwwroot/cat.acgnc.cc/sql/sspanel.sql
+	cd /www/wwwroot/cat.acgnc.cc
 	php -n xcat initdownload
 	php xcat initQQWry
 	yum -y install vixie-cron crontabs
@@ -35,9 +35,9 @@ install_ss_panel_mod_v3(){
 	echo 'SHELL=/bin/bash' >> /var/spool/cron/root
 	echo 'PATH=/sbin:/bin:/usr/sbin:/usr/bin' >> /var/spool/cron/root
 	echo '*/20 * * * * /usr/sbin/ntpdate pool.ntp.org > /dev/null 2>&1' >> /var/spool/cron/root
-	echo '30 22 * * * php /home/wwwroot/default/xcat sendDiaryMail' >> /var/spool/cron/root
-	echo '0 0 * * * php /home/wwwroot/default/xcat dailyjob' >> /var/spool/cron/root
-	echo '*/1 * * * * php /home/wwwroot/default/xcat checkjob' >> /var/spool/cron/root
+	echo '30 22 * * * php /www/wwwroot/cat.acgnc.cc/xcat sendDiaryMail' >> /var/spool/cron/root
+	echo '0 0 * * * php /www/wwwroot/cat.acgnc.cc/xcat dailyjob' >> /var/spool/cron/root
+	echo '*/1 * * * * php /www/wwwroot/cat.acgnc.cc/xcat checkjob' >> /var/spool/cron/root
 	/sbin/service crond restart
 }
 Libtest(){
@@ -324,4 +324,3 @@ else
 		;;
 	esac
 fi
-
